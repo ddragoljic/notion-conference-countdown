@@ -289,7 +289,7 @@ async function fetchData() {
             { property: "status", status: { does_not_equal: "attended" } }
           ]
         },
-        sorts: [{ property: "dates", direction: "ascending" }]
+
       })
     });
 
@@ -310,7 +310,7 @@ async function fetchData() {
       const dateVal = props["dates"]?.date?.start || null;
       const location = props["Location"]?.rich_text?.map(t => t.plain_text).join('') || '';
       return { name, date: dateVal, location };
-    }).filter(c => c.date && daysUntil(c.date) >= 0);
+    }).filter(c => c.date && daysUntil(c.date) >= 0).sort((a, b) => new Date(a.date) - new Date(b.date));
 
     if (upcoming.length === 0) {
       document.getElementById("main-content").innerHTML = `<div class="none-msg">no upcoming conferences yet — go find one! 🌿</div>`;
