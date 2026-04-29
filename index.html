@@ -285,11 +285,11 @@ async function fetchData() {
         page_size: 100,
         filter: {
           and: [
-            { property: "conference dates", date: { on_or_after: today } },
+            { property: "dates", date: { on_or_after: today } },
             { property: "status", status: { does_not_equal: "attended" } }
           ]
         },
-        sorts: [{ property: "conference dates", direction: "ascending" }]
+        sorts: [{ property: "dates", direction: "ascending" }]
       })
     });
 
@@ -307,7 +307,7 @@ async function fetchData() {
       const props = r.properties;
       const nameArr = props["Conference name"]?.title || props["Name"]?.title || [];
       const name = nameArr.map(t => t.plain_text).join('') || 'Untitled';
-      const dateVal = props["conference dates"]?.date?.start || null;
+      const dateVal = props["dates"]?.date?.start || null;
       const location = props["Location"]?.rich_text?.map(t => t.plain_text).join('') || '';
       return { name, date: dateVal, location };
     }).filter(c => c.date && daysUntil(c.date) >= 0);
