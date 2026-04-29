@@ -28,45 +28,20 @@
   .flap-unit { display: flex; flex-direction: column; align-items: center; gap: 4px; }
 
   .flap-tile {
-    width: 48px; height: 58px;
+    width: 52px; height: 58px;
     background: #2c2520;
     border-radius: 5px;
     position: relative;
-    display: flex; flex-direction: column;
-    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
     box-shadow: 0 2px 8px rgba(44,37,32,0.25), inset 0 1px 0 rgba(255,255,255,0.05);
-  }
-
-  .flap-top {
-    width: 100%; height: 50%;
-    background: #322b26;
-    display: flex; align-items: flex-end; justify-content: center;
-    padding-bottom: 2px;
-    border-bottom: 1px solid #1a1410;
-  }
-
-  .flap-bottom {
-    width: 100%; height: 50%;
-    background: #2c2520;
-    display: flex; align-items: flex-start; justify-content: center;
-    padding-top: 2px;
   }
 
   .flap-num {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 26px;
+    font-size: 28px;
     color: #f0e8d8;
     line-height: 1;
     letter-spacing: -1px;
-  }
-
-  /* Center divider line */
-  .flap-divider {
-    position: absolute;
-    top: 50%; left: 0; right: 0;
-    height: 1.5px;
-    background: #1a1410;
-    z-index: 2;
   }
 
   /* Screw details */
@@ -305,7 +280,7 @@ async function fetchData() {
 
     const upcoming = results.map(r => {
       const props = r.properties;
-      const nameArr = props["Conference name"]?.title || props["Name"]?.title || [];
+      const nameArr = props["conference name"]?.title || [];
       const name = nameArr.map(t => t.plain_text).join('') || 'Untitled';
       const dateVal = props["dates"]?.date?.start || null;
       const location = props["Location"]?.rich_text?.map(t => t.plain_text).join('') || '';
@@ -329,6 +304,7 @@ async function fetchData() {
 }
 
 if (getToken()) { showStats(); }
+setInterval(() => { if (getToken()) { fetchData(); } }, 60000);
 </script>
 </body>
 </html>
